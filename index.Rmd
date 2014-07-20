@@ -87,6 +87,7 @@ par(mfrow=c(1,1))
 ---
 
 ## Network Metrics (Degree)
+
 ```{r results = 'asis', comment = NA, message = F, echo = F}
 require(rCharts)
 load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
@@ -111,6 +112,7 @@ r1$print('chart1', include_assets = TRUE, cdn = TRUE)
 ---
 
 ## Network Metrics (Betweenness)
+
 ```{r results = 'asis', comment = NA, message = F, echo = F}
 require(rCharts)
 load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
@@ -135,6 +137,7 @@ r2$print('chart2')
 ---
 
 ## Network Metrics (Closeness)
+
 ```{r results = 'asis', comment = NA, message = F, echo = F}
 require(rCharts)
 load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
