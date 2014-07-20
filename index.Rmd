@@ -1,0 +1,181 @@
+---
+title       : Social Network Analysis
+subtitle    : 
+author      : 
+job         : 
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : standalone  # {standalone, draft}
+ext_widgets : {rCharts: [libraries/nvd3], shiny: [www/shared/datatables]}
+---
+
+## The Key Statistical Technique is Social Network Analysis
+SNA presents social relationships such as friendship and kinship in graphical form, consisting of nodes and edges.
+
+<img height=350 src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/slide1.png' alt='slide1'/>
+
+<!---
+<img height=350 src="https://dl.dropbox.com/u/7586336/googleVisExamples/gvisObject.png" alt="gvis object structure" />
+-->
+
+---
+
+## Connections between Churners and Non-churners 
+>  1. Churners **indirectly** connected through non-churners:
+
+>  <div class="centered">
+<img class src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/slide21.png' alt='slide21'/>
+</div>
+
+>  2. Churners **directly** connected:
+
+>  <div class="centered">
+<img src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/slide22.png' alt='slide22'/>
+</div>
+
+---
+
+## Prioritising Customers with a High Propensity to Churn
+<div class="centered">
+<img src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/slide3.png' alt='slide3'/>
+</div>
+
+
+---
+
+## Visualization of the Whole Network
+<div class="centered">
+<img src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/tk.png' alt='tk'/>
+</div>
+
+
+---
+
+## Key Network Attributes
+>  1. Degree
+>  2. Betweenness
+>  3. Closeness
+
+---
+
+## Network Metrics
+
+```{r, echo=FALSE,results='asis',comment=NA, fig.width = 13}
+load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
+par(mfrow=c(1,3))
+plot(df$Degree, df$Network, xlab="Degree", ylab="Network Centrality",
+     main="Network Centrality vs. Degree",
+     type='n')
+text(df$Degree, df$Network, labels=rownames(df), col="blue")
+
+
+plot(df$Between, df$Network, xlab="Betweenness", ylab="Network Centrality",
+     main="Network Centrality vs. Betweenness",
+     type='n')
+text(df$Between, df$Network, labels=rownames(df), col="blue")
+
+
+plot(df$Close, df$Network, xlab="Closeness", ylab="Network Centrality",
+     main="Network Centrality vs. Closeness",
+     type='n')
+text(df$Close, df$Network, labels=rownames(df), col="blue")
+par(mfrow=c(1,1))
+```
+
+---
+
+## Network Metrics (Degree)
+```{r results = 'asis', comment = NA, message = F, echo = F}
+require(rCharts)
+load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
+r1 <- nPlot(Network ~ Degree, group = "Customer_Number", data = df,type = "scatterChart",
+              height = 500, width = 900)
+r1$chart(tooltipContent = "#! function(key, x, y, e){
+  return '<b>Customer Number</b>: ' + e.point.Customer_Number
+} !#")
+r1$chart(color = '#! d3.scale.category10().range() !#')
+r1$chart(transitionDuration = '#! 350 !#')
+r1$chart(showDistY = '#! true !#')
+r1$chart(showDistX = '#! true !#')
+r1$chart(size = '#! 1 !#')
+r1$chart(sizeRange = '#! [100,100] !#')
+r1$xAxis(tickFormat = '#! d3.format(\' .02f\') !#')
+r1$xAxis(axisLabel = 'Degree')
+r1$yAxis(tickFormat = '#! d3.format(\' .02f\') !#')
+r1$yAxis(axisLabel = 'Network')
+r1$print('chart1', include_assets = TRUE, cdn = TRUE)
+```
+
+---
+
+## Network Metrics (Betweenness)
+```{r results = 'asis', comment = NA, message = F, echo = F}
+require(rCharts)
+load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
+r2 <- nPlot(Network ~ Between, group = "Customer_Number", data = df,type = "scatterChart",
+              height = 500, width = 900)
+r2$chart(tooltipContent = "#! function(key, x, y, e){
+  return '<b>Customer Number</b>: ' + e.point.Customer_Number
+} !#")
+r2$chart(color = '#! d3.scale.category10().range() !#')
+r2$chart(transitionDuration = '#! 350 !#')
+r2$chart(showDistY = '#! true !#')
+r2$chart(showDistX = '#! true !#')
+r2$chart(size = '#! 1 !#')
+r2$chart(sizeRange = '#! [100,100] !#')
+r2$xAxis(tickFormat = '#! d3.format(\' .02f\') !#')
+r2$xAxis(axisLabel = 'Degree')
+r2$yAxis(tickFormat = '#! d3.format(\' .02f\') !#')
+r2$yAxis(axisLabel = 'Network')
+r2$print('chart2')
+```
+
+---
+
+## Network Metrics (Closeness)
+```{r results = 'asis', comment = NA, message = F, echo = F}
+require(rCharts)
+load("/Users/cenanningli/GoogleDrive/Harmonic/Projects/R-shiny-Demo/slidify_version/SNA2/friendship.rda")
+r3 <- nPlot(Network ~ Close, group = "Customer_Number", data = df,type = "scatterChart",
+              height = 500, width = 900)
+r3$chart(tooltipContent = "#! function(key, x, y, e){
+  return '<b>Customer Number</b>: ' + e.point.Customer_Number
+} !#")
+r3$chart(color = '#! d3.scale.category10().range() !#')
+r3$chart(transitionDuration = '#! 350 !#')
+r3$chart(showDistY = '#! true !#')
+r3$chart(showDistX = '#! true !#')
+r3$chart(size = '#! 1 !#')
+r3$chart(sizeRange = '#! [100,100] !#')
+r3$xAxis(tickFormat = '#! d3.format(\' .02f\') !#')
+r3$xAxis(axisLabel = 'Degree')
+r3$yAxis(tickFormat = '#! d3.format(\' .02f\') !#')
+r3$yAxis(axisLabel = 'Network')
+r3$print('chart3')
+```
+
+---
+
+## Better Visualization of the Whole Network
+<div class="centered">
+<img src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/tk2.png' alt='tk2'/>
+</div>
+
+---
+
+## SNA Animation
+<div class="centered">
+<img src='https://raw.githubusercontent.com/lc-ethan/SNA/master/img/SNA.gif' />
+</div>
+
+
+
+
+
+
+
+
+
+---
